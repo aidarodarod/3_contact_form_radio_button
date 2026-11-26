@@ -665,11 +665,14 @@ body .left--modal .left--modal__wrap--front-callback-object .fpa-fl input.fpa-fl
   body .left--modal .left--modal__wrap .wpcf7 input[name="cphone"]{
     box-sizing:border-box!important;height:56px!important;min-height:56px!important;
   }
+  body .left--modal .left--modal__wrap .wpcf7 input:is([name="cname"],[name="cphone"]):not(.fpa-flow-invalid):not(.wpcf7-not-valid):not(:disabled):not([readonly]):is(:hover,:active,:focus){
+    border-color:#295AD9!important;outline-color:#295AD9!important;
+  }
   .left--modal__wrap--front-callback-object .fpa-pick__btn{
     justify-content:flex-start;height:50px;padding:0 18px 0 22px;
     border:1px solid #EBEFF8;border-radius:16px;background:#fff;box-shadow:none;
   }
-  .left--modal__wrap--front-callback-object .fpa-pick__btn:hover{border-color:#454545}
+  .left--modal__wrap--front-callback-object .fpa-pick__btn:is(:hover,:active){border-color:#295AD9}
   .left--modal__wrap--front-callback-object .fpa-pick__name{flex:1 1 auto;font-weight:475;color:#2B2D33}
   .left--modal__wrap--front-callback-object .fpa-pick__radio{display:block}
   .left--modal__wrap--front-callback-object .fpa-pick__btn[aria-checked="true"]{background:#fff;border-color:#295AD9;box-shadow:none}
