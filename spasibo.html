@@ -490,6 +490,15 @@ body.tax-categories.term-company footer.fpa-footer {
     .mobile-bottom-menu .mobile { transition-duration: .01ms !important; }
 }
 </style>
+<style id="fpa-mobile-input-size-labels">
+/* Mobile inputs only. Desktop rules and messenger controls are unchanged. */
+@media (max-width:782px){
+  body .left--modal .left--modal__wrap .wpcf7 input[name="cname"],
+  body .left--modal .left--modal__wrap .wpcf7 input[name="cphone"]{
+    box-sizing:border-box!important;height:56px!important;min-height:56px!important;
+  }
+}
+</style>
 </head>
  
     <body class="wp-singular page-template page-template-page-spasibo1 page-template-page-spasibo1-php page page-id-219332 wp-theme-fpa2026">
@@ -14106,4 +14115,23 @@ $(window).off('resize.fpaResponsiveLayout').on('resize.fpaResponsiveLayout', fun
 <script data-src="fpa-spasibo-flow">(function(){var d;try{d=JSON.parse(sessionStorage.getItem('fpaFlow')||'null')}catch(x){}
 if(!d)return;document.querySelectorAll('.page-spasibo-phone-content .current-phone .value').forEach(function(v){v.textContent=d.phone});
 })();</script>
+<script data-src="fpa-mobile-input-labels">
+/* Mobile placeholders only; restore each original value at desktop width. */
+(function(){
+  'use strict';
+  var mobile=window.matchMedia('(max-width:782px)');
+  var initial=new WeakMap();
+  function sync(){
+    document.querySelectorAll('.left--modal .wpcf7 input[name="cname"],.left--modal .wpcf7 input[name="cphone"]').forEach(function(input){
+      if(!initial.has(input))initial.set(input,{placeholder:input.getAttribute('placeholder'),label:input.getAttribute('aria-label')});
+      var saved=initial.get(input),label=input.name==='cname'?'Ваше имя':'Ваш номер';
+      if(mobile.matches){input.setAttribute('placeholder',label);input.setAttribute('aria-label',label);}
+      else{['placeholder','aria-label'].forEach(function(attribute){var value=attribute==='placeholder'?saved.placeholder:saved.label;if(value===null)input.removeAttribute(attribute);else input.setAttribute(attribute,value);});}
+    });
+  }
+  sync();
+  new MutationObserver(sync).observe(document.body,{childList:true,subtree:true});
+  mobile.addEventListener('change',sync);
+}());
+</script>
 </body></html>
