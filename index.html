@@ -679,6 +679,48 @@ body .left--modal .left--modal__wrap--front-callback-object .fpa-fl input.fpa-fl
   .left--modal__wrap--front-callback-object .fpa-pick__btn[aria-checked="true"] .fpa-pick__name{color:#2B2D33}
 }
 </style>
+<style id="fpa-desktop-compact-pick">
+/* Десктоп ≥783: окно «Расчёт стоимости» по макету «Компактные кнопки». Мобильная версия не меняется. */
+@media (min-width:783px){
+/* шапка: заголовок «Расчет стоимости», подзаголовок «Укажите сумму долга» вместо описания */
+.left--modal__wrap--front-callback-object .text-content{margin-bottom:16px}
+.left--modal__wrap--front-callback-object .text-content .title{margin-bottom:0}
+.left--modal__wrap--front-callback-object .text-content .subtitle.desktop{display:none}
+.left--modal__wrap--front-callback-object .fpa-d-sum-title{display:block}
+/* подзаголовок → содержимое: 20 px */
+.left--modal__wrap--front-callback-object .form-cnt form .field-title,
+.left--modal__wrap--front-callback-object .form-cnt form .field-title.margin-bottom-20{margin-bottom:20px}
+.left--modal__wrap--front-callback-object .form-cnt form .field-title p{margin:0}
+/* поля → «Куда прислать расчёт?»: 24; кнопки каналов → «Прислать расчёт»: 24 */
+.left--modal__wrap--front-callback-object form .row.fpa-pick-row{margin-top:24px}
+.left--modal__wrap--front-callback-object form .row.submit{margin-top:24px}
+/* поля как на сайте: подсказка в поле, без плавающей подписи */
+.left--modal__wrap--front-callback-object .fpa-fl__label{display:none}
+body .left--modal .left--modal__wrap--front-callback-object .fpa-fl.fpa-fl input:hover{border-color:#EBEFF8}
+body .left--modal .left--modal__wrap--front-callback-object .fpa-fl.fpa-fl.is-focus input:not(.fpa-flow-invalid),
+body .left--modal .left--modal__wrap--front-callback-object .fpa-fl.fpa-fl input:not(.fpa-flow-invalid):focus{border:1px solid #8fb2ff!important}
+.left--modal__wrap--front-callback-object .fpa-fl.is-focus input::placeholder{color:#757575}
+/* каналы связи: компактные кнопки 44 px · R100 · отступы 20 · интервал 8 */
+.left--modal__wrap--front-callback-object .fpa-pick{flex-direction:row;flex-wrap:wrap;gap:8px}
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn,
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn[hidden]{display:inline-flex;flex:0 0 auto;width:auto;height:44px;margin:0;padding:0 20px;gap:8px;justify-content:flex-start;border:0;border-radius:100px;background:#F4F6FB;box-shadow:none;animation:none;transition:background-color .2s ease}
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__name{flex:0 0 auto;font-family:"Roboto Flex",Arial,sans-serif;font-weight:475;font-size:14.5px;line-height:20px;letter-spacing:0;color:#303030;transition:color .2s ease}
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__radio{display:none}
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn:hover,
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn:active,
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn[aria-checked="true"]{background:#295AD9;border:0}
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn:hover .fpa-pick__name,
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn:active .fpa-pick__name,
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn[aria-checked="true"] .fpa-pick__name{color:#fff}
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn--sms:is(:hover,:active,[aria-checked="true"]) circle{fill:#fff}
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn--sms:is(:hover,:active,[aria-checked="true"]) path{fill:#295AD9}
+.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn--sms circle,.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn--sms path{transition:fill .2s ease}
+/* смс на десктопе — сразу четвёртой кнопкой, строка «У меня нет мессенджера» не нужна */
+.left--modal__wrap--front-callback-object .fpa-pick__sms,.left--modal__wrap--front-callback-object .fpa-pick__sms[hidden]{display:none}
+}
+@media (min-width:783px) and (prefers-reduced-motion:reduce){.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__btn,.left--modal__wrap--front-callback-object .fpa-pick .fpa-pick__name{transition:none}}
+@media (max-width:782px){.fpa-d-sum-title{display:none}}
+</style>
 </head>
     <body class="home wp-singular page-template page-template-page-frontpage-v2 page-template-page-frontpage-v2-php page page-id-333385 wp-theme-fpa2026 fpa-frontpage-v2 page-template-page-frontpage page-template-page-frontpage-php">
                 <!-- Roistat Counter Start -->
@@ -13010,7 +13052,7 @@ $(window).off('resize.fpaResponsiveLayout').on('resize.fpaResponsiveLayout', fun
         var b = e.target.closest && e.target.closest('.fpa-pick__btn'); if (!b) return;
         if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].indexOf(e.key) < 0) return;
         e.preventDefault();
-        var all = Array.prototype.slice.call(b.parentNode.children).filter(function (x) { return !x.hidden; }), i = all.indexOf(b);
+        var all = Array.prototype.slice.call(b.parentNode.children).filter(function (x) { return x.offsetParent !== null; }), i = all.indexOf(b);
         var n = all[(i + (e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : all.length - 1)) % all.length];
         n.focus(); select(scopeOf(n), n.dataset.msg);
     });
@@ -13095,6 +13137,32 @@ $(window).off('resize.fpaResponsiveLayout').on('resize.fpaResponsiveLayout', fun
   sync();
   new MutationObserver(sync).observe(document.body,{childList:true,subtree:true});
   mobile.addEventListener('change',sync);
+}());
+</script>
+<script data-src="fpa-desktop-compact-pick">
+/* Десктоп: заголовок и подзаголовок по макету, подсказки в полях как на сайте. Мобильная версия не меняется. */
+(function () {
+    'use strict';
+    var desk = window.matchMedia('(min-width:783px)');
+    var PH = { cname: 'Ваше имя', cphone: '+7 (000) 000-00-00' };
+    function apply() {
+        document.querySelectorAll('.left--modal__wrap--front-callback-object').forEach(function (w) {
+            var form = w.querySelector('form'); if (!form || !form.querySelector('.fpa-pick')) return;
+            var t = w.querySelector('.text-content .title .desktop'); if (t && t.textContent !== 'Расчет стоимости') t.textContent = 'Расчет стоимости';
+            var radio = form.querySelector('.field-radio-cnt.desktop');
+            if (radio && !form.querySelector('.fpa-d-sum-title')) {
+                var h = document.createElement('div'); h.className = 'field-title fpa-d-sum-title'; h.innerHTML = '<p>Укажите сумму долга</p>';
+                radio.parentNode.insertBefore(h, radio);
+            }
+            if (desk.matches) form.querySelectorAll('input[name="cname"],input[name="cphone"]').forEach(function (i) {
+                if (i.getAttribute('placeholder') !== PH[i.name]) i.setAttribute('placeholder', PH[i.name]);
+                if (i.getAttribute('aria-label') !== null && i.name === 'cphone' && i.getAttribute('aria-label') !== 'Ваш номер') i.setAttribute('aria-label', 'Ваш номер');
+            });
+        });
+    }
+    apply();
+    new MutationObserver(apply).observe(document.body, { childList: true, subtree: true });
+    desk.addEventListener('change', apply);
 }());
 </script>
 </body></html>
